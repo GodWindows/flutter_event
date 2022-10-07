@@ -3,21 +3,21 @@ import 'package:http/http.dart' as http;
 import 'package:party/globals.dart' as global;
 import 'package:party/vues/ListInvites.dart';
 
+void sendData() async {
+  var donnees =
+      await http.post(Uri.parse("http://172.27.48.1/party/create.php"), body: {
+    "api_key": "ghdtb81t8dt8r",
+    "fname": "${last_name_controller.text}",
+    "lname": "${name_controller.text}"
+  });
+  var json = donnees.body;
+  print(donnees.body);
+}
 
-  void sendData() async {
-    var donnees = await http
-        .post(Uri.parse("http://172.27.48.1/party/create.php"), body: {
-      "fname": "${last_name_controller.text}",
-      "lname": "${name_controller.text}"
-    });
-    var json = donnees.body;
-    print(donnees.body);
-  }
-  
+TextEditingController name_controller = TextEditingController();
+TextEditingController last_name_controller = TextEditingController();
 
-  TextEditingController name_controller = TextEditingController();
-  TextEditingController last_name_controller = TextEditingController();
-  class AjoutInvites extends StatefulWidget {
+class AjoutInvites extends StatefulWidget {
   const AjoutInvites({super.key});
 
   @override
@@ -27,17 +27,24 @@ import 'package:party/vues/ListInvites.dart';
 class _AjoutInvitesState extends State<AjoutInvites> {
   @override
   Widget build(BuildContext context) {
+    double _screenHeight = MediaQuery.of(context).size.height;
+    double _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-          floatingActionButton: IconButton(
-              onPressed: () {
-                sendData();
-                name_controller.text = "";
-                last_name_controller.text = "";
-              },
-              icon: Icon(Icons.people)),
-          appBar: global.appbar1,
-          body: SingleChildScrollView(
+      floatingActionButton: IconButton(
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (BuildContext context) {
+              return const ListInvites();
+            }));
+          },
+          icon: Icon(Icons.people)),
+      appBar: global.appbar1,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            width: _screenWidth * 0.9,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 global.h_box(15),
@@ -57,15 +64,16 @@ class _AjoutInvitesState extends State<AjoutInvites> {
                 global.h_box(40),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return const ListInvites();
-                      }));
+                      sendData();
+                      name_controller.text = "";
+                      last_name_controller.text = "";
                     },
-                    child: Text("Voir tous les invités"))
+                    child: Text("Ajouter"))
               ],
             ),
           ),
-        );
+        ),
+      ),
+    );
   }
 }

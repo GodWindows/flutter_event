@@ -14,6 +14,7 @@ Widget w_box(double w) {
 }
 
 var appbar1 = AppBar(
-  backgroundColor: Color.fromARGB(255, 175, 76, 162),
+  backgroundColor: Colors.deepPurple,
   title: Text("Party App"),
+  centerTitle: true,
 );

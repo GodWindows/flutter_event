@@ -16,8 +16,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Party App',
-      theme: ThemeData(primaryColor: Color.fromARGB(255, 175, 76, 162)),
       home: const MyHomePage(title: 'Party App'),
     );
   }
@@ -34,6 +32,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: "Party", home: AjoutInvites());
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Party App',
+        theme: ThemeData(primarySwatch: Colors.deepPurple),
+        home: AjoutInvites());
   }
 }
