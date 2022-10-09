@@ -4,12 +4,13 @@ import 'package:party/globals.dart' as global;
 import 'package:party/vues/ListInvites.dart';
 
 void sendData() async {
-  var donnees =
-      await http.post(Uri.parse("http://172.27.48.1/party/create.php"), body: {
-    "api_key": "ghdtb81t8dt8r",
-    "fname": "${last_name_controller.text}",
-    "lname": "${name_controller.text}"
-  });
+  var donnees = await http.post(
+      Uri.parse("http://godwindows.infinityfreeapp.com/party/create.php"),
+      body: {
+        "api_key": "ghdtb81t8dt8r",
+        "fname": "${last_name_controller.text}",
+        "lname": "${name_controller.text}"
+      });
   var json = donnees.body;
   print(donnees.body);
 }
@@ -31,6 +32,7 @@ class _AjoutInvitesState extends State<AjoutInvites> {
     double _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       floatingActionButton: IconButton(
+          color: Colors.deepPurple,
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (BuildContext context) {
@@ -53,7 +55,7 @@ class _AjoutInvitesState extends State<AjoutInvites> {
                 ),
                 global.h_box(15),
                 TextFormField(
-                  decoration: InputDecoration(label: Text("Nom de famille")),
+                  decoration: InputDecoration(label: Text("Nom")),
                   controller: name_controller,
                 ),
                 global.w_box(15),
