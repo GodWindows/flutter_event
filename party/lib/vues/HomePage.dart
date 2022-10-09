@@ -5,6 +5,7 @@ import 'package:party/globals.dart' as global;
 import 'package:party/vues/ajoutInvites.dart';
 import 'package:party/vues/ListInvites.dart';
 import 'package:party/vues/CreateTicket.dart';
+import 'package:party/vues/VerifyTicket.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
-                      return const CreateTicket();
+                      return const BarcodeScannerWithController();
                     }));
                   },
                   child: Text("Vérifier un ticket")),

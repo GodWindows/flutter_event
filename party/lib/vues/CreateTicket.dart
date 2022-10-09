@@ -14,15 +14,17 @@ class CreateTicket extends StatefulWidget {
 class _CreateTicketState extends State<CreateTicket> {
   @override
   Widget build(BuildContext context) {
+    String code = "Party test Invité numéro 15165152 Pascal";
     return Scaffold(
         appBar: global.appbar1,
         body: SingleChildScrollView(
           child: Center(
             child: QrImage(
-                data: "Party test Invité numéro 1",
+                data: code,
+                foregroundColor: Colors.deepPurple,
                 version: QrVersions.auto,
                 size: 200.0,
-                embeddedImage: AssetImage('assets/images/logo.png'),
+                embeddedImage: AssetImage('assets/images/logoo.png'),
                 embeddedImageStyle: QrEmbeddedImageStyle(
                   size: Size(80, 80),
                 ),
