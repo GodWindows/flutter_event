@@ -10,6 +10,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:english_words/english_words.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateTicket extends StatefulWidget {
   const CreateTicket({super.key});
@@ -19,15 +20,45 @@ class CreateTicket extends StatefulWidget {
 }
 
 class _CreateTicketState extends State<CreateTicket> {
+  late SharedPreferences preferences;
+  List<String> les_codes = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init();
+  }
+
+  init() async {
+    preferences = await SharedPreferences.getInstance();
+    var tmp = preferences.getStringList('codes');
+    if (tmp != null) {
+      les_codes = tmp;
+    }
+  }
+
+  saveCode(String codes) {
+    setState(() {
+      les_codes.add(codes);
+      preferences.setStringList("codes", les_codes);
+    });
+    global.toast("Enrégistré");
+  }
+
+  String generateCode() {
+    var random_code = Random().nextInt(100000) * 100;
+    final random_word = WordPair.random();
+    return "Party test Invité numéro $random_code ${random_word.asPascalCase}";
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("objectobjectobjectobjectobjectobjectobjectobject");
     double pixelRatio = MediaQuery.of(context).devicePixelRatio;
     double _screenHeight = MediaQuery.of(context).size.height;
     double _screenWidth = MediaQuery.of(context).size.width;
-    var random_code = Random().nextInt(100000) * 100;
-    final wordPair = WordPair.random();
-    String code =
-        "Party test Invité numéro $random_code ${wordPair.asPascalCase}";
+    String code = generateCode();
     ScreenshotController screenshotController = ScreenshotController();
 
     return Scaffold(
@@ -36,6 +67,7 @@ class _CreateTicketState extends State<CreateTicket> {
           child: Center(
             child: Column(
               children: [
+                //Text(code),
                 global.h_box(_screenHeight / 6),
                 QrImage(
                     data: code,
@@ -55,7 +87,6 @@ class _CreateTicketState extends State<CreateTicket> {
                 global.h_box(30),
                 ElevatedButton(
                     onPressed: () async {
-                      global.toast("Enrégistré");
                       screenshotController
                           .captureFromWidget(
                               Column(
@@ -98,11 +129,11 @@ class _CreateTicketState extends State<CreateTicket> {
                         final result = await ImageGallerySaver.saveImage(
                             capturedImage,
                             quality: 60,
-                            name: "${random_code / 100}");
+                            name: "${code}");
+                        saveCode(code);
                         print(result);
                       });
                       //String? path = await NativeScreenshot.takeScreenshot();
-                      setState(() {});
                     },
                     child: Text("Enregistrer ce ticket"))
               ],
