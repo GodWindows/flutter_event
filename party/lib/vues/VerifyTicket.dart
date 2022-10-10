@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BarcodeScannerWithController extends StatefulWidget {
   const BarcodeScannerWithController({Key? key}) : super(key: key);
@@ -21,16 +22,27 @@ class _BarcodeScannerWithControllerState
     with SingleTickerProviderStateMixin {
   String? barcode;
 
+  late SharedPreferences preferences;
   MobileScannerController controller = MobileScannerController(
     torchEnabled: false,
     // formats: [BarcodeFormat.qrCode]
     // facing: CameraFacing.front,
   );
 
+  List<String> les_codes = [];
+  init() async {
+    preferences = await SharedPreferences.getInstance();
+    var tmp = preferences.getStringList('codes');
+    if (tmp != null) {
+      les_codes = tmp;
+    }
+  }
+
   bool isStarted = true;
 
   @override
   Widget build(BuildContext context) {
+    init();
     double _screenHeight = MediaQuery.of(context).size.height;
     double _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -48,10 +60,7 @@ class _BarcodeScannerWithControllerState
                 //   facing: CameraFacing.front,
                 // ),
                 onDetect: (barcode, args) {
-                  if ((barcode.rawValue ==
-                          "Party test Invité numéro 15165152 Céphas") ||
-                      barcode.rawValue ==
-                          "Party test Invité numéro 15165152 Godwin") {
+                  if (les_codes.contains(barcode.rawValue)) {
                     global.toast("Code détecté");
                   } else {
                     global.toast("Code non reconnu. Veuillez réésayer");

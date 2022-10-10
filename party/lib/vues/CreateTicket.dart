@@ -22,14 +22,6 @@ class CreateTicket extends StatefulWidget {
 class _CreateTicketState extends State<CreateTicket> {
   late SharedPreferences preferences;
   List<String> les_codes = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    init();
-  }
-
   init() async {
     preferences = await SharedPreferences.getInstance();
     var tmp = preferences.getStringList('codes');
@@ -41,6 +33,7 @@ class _CreateTicketState extends State<CreateTicket> {
   saveCode(String codes) {
     setState(() {
       les_codes.add(codes);
+      print(les_codes);
       preferences.setStringList("codes", les_codes);
     });
     global.toast("Enrégistré");
@@ -49,18 +42,22 @@ class _CreateTicketState extends State<CreateTicket> {
   String generateCode() {
     var random_code = Random().nextInt(100000) * 100;
     final random_word = WordPair.random();
-    return "Party test Invité numéro $random_code ${random_word.asPascalCase}";
+    String generated_code =
+        "Party test Invité numéro $random_code ${random_word.asPascalCase}";
+    if (les_codes.contains(generated_code)) {
+      generated_code = generateCode();
+    }
+    return generated_code;
   }
 
   @override
   Widget build(BuildContext context) {
-    print("objectobjectobjectobjectobjectobjectobjectobject");
+    init();
     double pixelRatio = MediaQuery.of(context).devicePixelRatio;
     double _screenHeight = MediaQuery.of(context).size.height;
     double _screenWidth = MediaQuery.of(context).size.width;
     String code = generateCode();
     ScreenshotController screenshotController = ScreenshotController();
-
     return Scaffold(
         appBar: global.appbar1,
         body: SingleChildScrollView(
@@ -87,6 +84,7 @@ class _CreateTicketState extends State<CreateTicket> {
                 global.h_box(30),
                 ElevatedButton(
                     onPressed: () async {
+                      saveCode(code);
                       screenshotController
                           .captureFromWidget(
                               Column(
@@ -130,8 +128,7 @@ class _CreateTicketState extends State<CreateTicket> {
                             capturedImage,
                             quality: 60,
                             name: "${code}");
-                        saveCode(code);
-                        print(result);
+                        //print(result);
                       });
                       //String? path = await NativeScreenshot.takeScreenshot();
                     },
