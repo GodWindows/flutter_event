@@ -22,7 +22,7 @@ class _BarcodeScannerWithControllerState
   String? barcode;
 
   MobileScannerController controller = MobileScannerController(
-    torchEnabled: true,
+    torchEnabled: false,
     // formats: [BarcodeFormat.qrCode]
     // facing: CameraFacing.front,
   );
@@ -31,6 +31,8 @@ class _BarcodeScannerWithControllerState
 
   @override
   Widget build(BuildContext context) {
+    double _screenHeight = MediaQuery.of(context).size.height;
+    double _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Builder(
@@ -50,23 +52,9 @@ class _BarcodeScannerWithControllerState
                           "Party test Invité numéro 15165152 Céphas") ||
                       barcode.rawValue ==
                           "Party test Invité numéro 15165152 Godwin") {
-                    Fluttertoast.showToast(
-                        msg: "Code détecté",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
+                    global.toast("Code détecté");
                   } else {
-                    Fluttertoast.showToast(
-                        msg: "Code non reconnu. Veuillez réésayer",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
+                    global.toast("Code non reconnu. Veuillez réésayer");
                   }
                 },
               ),

@@ -51,5 +51,7 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan QR codes</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs storage access to save images</string>
 </dict>
 </plist>
