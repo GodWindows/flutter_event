@@ -30,11 +30,16 @@ class _BarcodeScannerWithControllerState
   );
 
   List<String> les_codes = [];
+  List<String> les_codes_scannes = [];
   init() async {
     preferences = await SharedPreferences.getInstance();
     var tmp = preferences.getStringList('codes');
     if (tmp != null) {
       les_codes = tmp;
+    }
+    tmp = preferences.getStringList('codes_scannes');
+    if (tmp != null) {
+      les_codes_scannes = tmp;
     }
   }
 
@@ -61,9 +66,16 @@ class _BarcodeScannerWithControllerState
                 // ),
                 onDetect: (barcode, args) {
                   if (les_codes.contains(barcode.rawValue)) {
-                    global.toast("Code détecté");
+                    if (les_codes_scannes.contains(barcode.rawValue)) {
+                      global.red_toast("Code déjà scanné!");
+                    } else {
+                      global.toast("Code détecté");
+                      les_codes_scannes.add(barcode.rawValue!);
+                      preferences.setStringList(
+                          'codes_scannes', les_codes_scannes);
+                    }
                   } else {
-                    global.toast("Code non reconnu. Veuillez réésayer");
+                    global.red_toast("Code non reconnu. Veuillez réésayer");
                   }
                 },
               ),
@@ -104,7 +116,6 @@ class _BarcodeScannerWithControllerState
                         iconSize: 32.0,
                         onPressed: () => controller.toggleTorch(),
                       ),
-                      /* 
                       IconButton(
                         color: Colors.white,
                         icon: isStarted
@@ -115,14 +126,14 @@ class _BarcodeScannerWithControllerState
                           isStarted ? controller.stop() : controller.start();
                           isStarted = !isStarted;
                         }),
-                      ), */
+                      ),
                       Center(
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width - 200,
                           height: 50,
                           child: FittedBox(
                             child: Text(
-                              barcode ?? 'Scannez le ticket!',
+                              barcode ?? 'Approchez la caméra du ticket!',
                               overflow: TextOverflow.fade,
                               style: Theme.of(context)
                                   .textTheme
