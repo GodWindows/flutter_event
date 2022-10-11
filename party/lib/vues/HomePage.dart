@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
-                      return const AjoutInvites();
+                      return const AjoutInvites(); //Redirige vers la page d'ajout d'invités
                     }));
                   },
                   child: Text("Ajouter un invité")),
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
-                      return const CreateTicket();
+                      return const CreateTicket();//Redirige vers la page de création de tickets
                     }));
                   },
                   child: Text("Créer un ticket")),
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
-                      return const BarcodeScannerWithController();
+                      return const BarcodeScannerWithController();//Redirige vers la page de vérification de tickets
                     }));
                   },
                   child: Text("Vérifier un ticket")),

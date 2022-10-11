@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:party/globals.dart' as global;
@@ -31,7 +32,11 @@ class _BarcodeScannerWithControllerState
 
   List<String> les_codes = [];
   List<String> les_codes_scannes = [];
+  final good_song_player = AudioPlayer();
+  final bad_song_player = AudioPlayer();
   init() async {
+    await good_song_player.setSource(AssetSource('sounds/good.mp3'));
+    await bad_song_player.setSource(AssetSource('sounds/bad.mp3'));
     preferences = await SharedPreferences.getInstance();
     var tmp = preferences.getStringList('codes');
     if (tmp != null) {
@@ -67,14 +72,17 @@ class _BarcodeScannerWithControllerState
                 onDetect: (barcode, args) {
                   if (les_codes.contains(barcode.rawValue)) {
                     if (les_codes_scannes.contains(barcode.rawValue)) {
+                      bad_song_player.play(AssetSource('sounds/bad.mp3'));
                       global.red_toast("Code déjà scanné!");
                     } else {
+                      good_song_player.play(AssetSource('sounds/good.mp3'));
                       global.toast("Code détecté");
                       les_codes_scannes.add(barcode.rawValue!);
                       preferences.setStringList(
                           'codes_scannes', les_codes_scannes);
                     }
                   } else {
+                    bad_song_player.play(AssetSource('assets/sounds/bad.mp3'));
                     global.red_toast("Code non reconnu. Veuillez réésayer");
                   }
                 },
