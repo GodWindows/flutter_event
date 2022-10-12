@@ -1,9 +1,6 @@
 import 'dart:math';
 import 'package:native_screenshot/native_screenshot.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:party/globals.dart' as global;
 import 'package:qr_flutter/qr_flutter.dart';
@@ -11,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:english_words/english_words.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
 
 class CreateTicket extends StatefulWidget {
   const CreateTicket({super.key});
@@ -50,14 +48,34 @@ class _CreateTicketState extends State<CreateTicket> {
     return generated_code;
   }
 
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/counter.txt');
+  }
+
+  Future<File> write() async {
+    final file = await _localFile;
+
+    // Write the file
+    return file.writeAsString('File created by Party App');
+  }
+
   @override
   Widget build(BuildContext context) {
     init();
+    global.getStoragePermission(context);
     double pixelRatio = MediaQuery.of(context).devicePixelRatio;
     double _screenHeight = MediaQuery.of(context).size.height;
     double _screenWidth = MediaQuery.of(context).size.width;
     String code = generateCode();
     ScreenshotController screenshotController = ScreenshotController();
+    write();
     return Scaffold(
         appBar: global.appbar1,
         body: SingleChildScrollView(
@@ -73,7 +91,7 @@ class _CreateTicketState extends State<CreateTicket> {
                     size: 200.0,
                     errorStateBuilder: (cxt, err) {
                       return Container(
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             "Erreur! Impossible de générer le code QR",
                             textAlign: TextAlign.center,
@@ -97,7 +115,7 @@ class _CreateTicketState extends State<CreateTicket> {
                                       size: 200.0,
                                       errorStateBuilder: (cxt, err) {
                                         return Container(
-                                          child: Center(
+                                          child: const Center(
                                             child: Text(
                                               "Erreur! Impossible de générer le code QR",
                                               textAlign: TextAlign.center,
@@ -106,14 +124,14 @@ class _CreateTicketState extends State<CreateTicket> {
                                         );
                                       }),
                                   global.h_box(30),
-                                  Center(
+                                  const Center(
                                     child: Text(
                                       "Ce code représente votre ticket. Ne le partagez avec personne!",
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
                                   global.h_box(150),
-                                  Center(
+                                  const Center(
                                     child: Text(
                                       "Code généré par Party App",
                                       style:
@@ -128,11 +146,11 @@ class _CreateTicketState extends State<CreateTicket> {
                             capturedImage,
                             quality: 60,
                             name: "${code}");
-                        //print(result);
+                        print(result);
                       });
                       //String? path = await NativeScreenshot.takeScreenshot();
                     },
-                    child: Text("Enregistrer ce ticket"))
+                    child: const Text("Enregistrer ce ticket"))
               ],
             ),
           ),
