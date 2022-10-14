@@ -2,7 +2,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:party/globals.dart' as global;
-//import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +33,11 @@ class _BarcodeScannerWithControllerState
   List<String> les_codes_scannes = [];
   final good_song_player = AudioPlayer();
   final bad_song_player = AudioPlayer();
+  final bad_song_player2 = AudioPlayer();
   init() async {
     await good_song_player.setSource(AssetSource('sounds/good.mp3'));
     await bad_song_player.setSource(AssetSource('sounds/bad.mp3'));
+    await bad_song_player2.setSource(AssetSource('sounds/bad.mp3'));
     preferences = await SharedPreferences.getInstance();
     var tmp = preferences.getStringList('codes');
     if (tmp != null) {
@@ -82,7 +83,7 @@ class _BarcodeScannerWithControllerState
                           'codes_scannes', les_codes_scannes);
                     }
                   } else {
-                    bad_song_player.play(AssetSource('assets/sounds/bad.mp3'));
+                    bad_song_player2.play(AssetSource('assets/sounds/bad.mp3'));
                     global.red_toast("Code non reconnu. Veuillez réésayer");
                   }
                 },
