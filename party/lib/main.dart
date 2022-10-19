@@ -55,6 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
         debugShowCheckedModeBanner: false,
         title: 'Party App',
         theme: ThemeData(primarySwatch: Colors.deepPurple),
-        home: (true) ? HomePage() : BriefPage());
+        home: BriefPage());
   }
 }

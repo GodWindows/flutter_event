@@ -14,26 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String beta_code = "rg8r498j4ryk8ut9q48x16jj17uk484q8g6sgs4@";
-  var api_beta_codes;
-  bool _isloading = true;
-  bool _isAllowed = false;
 
-  void getData() async {
-    var donnees = await http.post(
-        Uri.parse(
-            "http://godwindows.infinityfreeapp.com/party/readBetaCodes.php"),
-        body: {
-          "api_key": "ghdtb81t8dt8r",
-        });
-    setState(() {
-      api_beta_codes = jsonDecode(donnees.body);
-      _isloading = false;
-      if (api_beta_codes[0]['content'] == beta_code) {
-        _isAllowed = true;
-      } else {}
-    });
-  }
+
 
   @override
   void initState() {
@@ -45,13 +27,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double _screenHeight = MediaQuery.of(context).size.height;
     double _screenWidth = MediaQuery.of(context).size.width;
-    getData();
     return Scaffold(
       appBar: global.appbar1,
-      body: (_isloading)
-          ? Center(child: CircularProgressIndicator())
-          : (_isAllowed)
-              ? SingleChildScrollView(
+      body:SingleChildScrollView(
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -87,9 +65,6 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
                 ),
     );
   }
