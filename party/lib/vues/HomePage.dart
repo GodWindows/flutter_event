@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        global.h_box(_screenHeight / 3),
+                        global.h_box(_screenHeight / 3),/* 
                         ElevatedButton(
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                                 return const AjoutInvites(); //Redirige vers la page d'ajout d'invités
                               }));
                             },
-                            child: Text("Ajouter un invité")),
+                            child: Text("Ajouter un invité")), */
                         global.h_box(30),
                         ElevatedButton(
                             onPressed: () {

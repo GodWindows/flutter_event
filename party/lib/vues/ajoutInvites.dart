@@ -12,7 +12,7 @@ void sendData() async {
         "lname": "${name_controller.text}"
       });
   var json = donnees.body;
-  print(donnees.body);
+  //print(donnees.body);
 }
 
 TextEditingController name_controller = TextEditingController();

@@ -31,7 +31,7 @@ class _CreateTicketState extends State<CreateTicket> {
   saveCode(String codes) {
     setState(() {
       les_codes.add(codes);
-      print(les_codes);
+      //print(les_codes);
       preferences.setStringList("codes", les_codes);
     });
     global.toast("Enrégistré");
@@ -146,7 +146,7 @@ class _CreateTicketState extends State<CreateTicket> {
                             capturedImage,
                             quality: 60,
                             name: "${code}");
-                        print(result);
+                        //print(result);
                       });
                       //String? path = await NativeScreenshot.takeScreenshot();
                     },
