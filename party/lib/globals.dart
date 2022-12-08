@@ -67,6 +67,8 @@ Future getStoragePermission(BuildContext context) async {
   }
 }
 
+String api_url = "http://localhost/party";
+
 String accords_confidentialite =
     """Sauf dispositions contraires dans le présent Accord, les Fonctionnalités de l'application resteront la propriété exclusive de Party App et les informations ne seront utilisées par le Testeur qu’aux fins permises. Le Testeur n’utilisera pas les informations sur les Fonctionnalités de l'application à des fins qui pourraient directement ou indirectement porter préjudice aux développeurs.
 

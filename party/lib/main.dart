@@ -4,6 +4,7 @@ import 'package:party/globals.dart' as global;
 import 'package:party/vues/ListInvites.dart';
 import 'package:party/vues/ajoutInvites.dart';
 import 'package:party/vues/HomePage.dart';
+import 'package:party/vues/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:party/vues/BriefPage.dart';
 
@@ -55,6 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
         debugShowCheckedModeBanner: false,
         title: 'Party App',
         theme: ThemeData(primarySwatch: Colors.deepPurple),
-        home: BriefPage());
+        home: LoginPage());
   }
 }

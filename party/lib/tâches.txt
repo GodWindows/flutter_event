@@ -1,0 +1,1 @@
+Vérifier si l'utilisateur est connecté avant de lui afficher la page de login

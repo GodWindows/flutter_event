@@ -5,7 +5,7 @@ import 'package:party/vues/ListInvites.dart';
 
 void sendData() async {
   var donnees = await http.post(
-      Uri.parse("http://godwindows.infinityfreeapp.com/party/create.php"),
+      Uri.parse("http://${global.api_url}/create.php"),
       body: {
         "api_key": "ghdtb81t8dt8r",
         "fname": "${last_name_controller.text}",
