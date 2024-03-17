@@ -23,7 +23,7 @@ Get ready to elevate your event experience with our Flutter-based mobile app! ğŸ
 - The app features a clean, minimalist design, making it user-friendly and easy to navigate for both organizers and security personnel.
 
 ## ğŸš€ Getting Started
-Getting started is simple. Just download the app, follow the setup instructions, and you're ready to transform your event entry process.
+Getting started is simple. Just install the app, follow the setup instructions, and you're ready to transform your event entry process.
 
 ---
 
